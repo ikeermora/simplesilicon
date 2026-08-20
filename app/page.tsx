@@ -1,3 +1,4 @@
+import { HashlessNavigation } from "./HashlessNavigation";
 import { ProductPreview } from "./ProductPreview";
 
 export const dynamic = "force-static";
@@ -31,17 +32,24 @@ const capabilities = [
 ];
 
 export default function Home() {
+  const siteRoot = `${process.env.NEXT_PUBLIC_SITE_BASE ?? ""}/`;
+
   return (
-    <main>
+    <HashlessNavigation>
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="Simple Silicon home">
+        <a
+          className="brand"
+          href={siteRoot}
+          data-scroll-target="top"
+          aria-label="Simple Silicon home"
+        >
           <Prism compact />
           <span>Simple Silicon</span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#product">Product</a>
-          <a href="#vision">Vision</a>
-          <a className="nav-cta" href="#product">View the workbench</a>
+          <a href={siteRoot} data-scroll-target="product">Product</a>
+          <a href={siteRoot} data-scroll-target="vision">Vision</a>
+          <a className="nav-cta" href={siteRoot} data-scroll-target="product">View the workbench</a>
         </nav>
       </header>
 
@@ -62,8 +70,8 @@ export default function Home() {
             waveforms, module interfaces, and RTL visualization.
           </p>
           <div className="hero__actions">
-            <a className="button button--dark" href="#product">Explore the product</a>
-            <a className="text-link" href="#vision">About the project <span aria-hidden="true">↘</span></a>
+            <a className="button button--dark" href={siteRoot} data-scroll-target="product">Explore the product</a>
+            <a className="text-link" href={siteRoot} data-scroll-target="vision">About the project <span aria-hidden="true">↘</span></a>
           </div>
         </div>
       </section>
@@ -182,17 +190,22 @@ export default function Home() {
       <section className="final-cta">
         <p className="eyebrow">Simple Silicon / In active development</p>
         <h2>Follow the signal.</h2>
-        <a className="button button--light" href="#top">Explore Simple Silicon <span aria-hidden="true">↑</span></a>
+        <a className="button button--light" href={siteRoot} data-scroll-target="top">Explore Simple Silicon <span aria-hidden="true">↑</span></a>
       </section>
 
       <footer>
-        <a className="brand brand--footer" href="#top" aria-label="Back to top">
+        <a
+          className="brand brand--footer"
+          href={siteRoot}
+          data-scroll-target="top"
+          aria-label="Back to top"
+        >
           <Prism compact />
           <span>Simple Silicon</span>
         </a>
         <p>© 2026 Simple Silicon</p>
         <p>Built by Iker Garcia Morales</p>
       </footer>
-    </main>
+    </HashlessNavigation>
   );
 }

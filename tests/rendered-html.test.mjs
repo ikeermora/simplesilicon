@@ -16,6 +16,10 @@ test("exports a complete public landing page", async () => {
   assert.match(html, /Iker Garcia Morales/);
   assert.doesNotMatch(html, /github\.com\/ikeermora\/simple-silicon/i);
   assert.doesNotMatch(html, /codex-preview|Starter Project|react-loading-skeleton/i);
+  assert.doesNotMatch(html, /href="#/i);
+  assert.match(html, /data-scroll-target="top"/);
+  assert.match(html, /data-scroll-target="product"/);
+  assert.match(html, /data-scroll-target="vision"/);
 });
 
 test("includes the public product media and identity assets", async () => {
