@@ -23,7 +23,20 @@ test("includes the public product media and identity assets", async () => {
     access(new URL("product/editor-1600.webp", outputRoot)),
     access(new URL("product/waveforms-1600.webp", outputRoot)),
     access(new URL("product/rtl-1600.webp", outputRoot)),
+    access(new URL("product/rtl-register-1600.webp", outputRoot)),
+    access(new URL("product/rtl-alu-1600.webp", outputRoot)),
+    access(new URL("product/rtl-control-1600.webp", outputRoot)),
     access(new URL("favicon.png", outputRoot)),
     access(new URL("og-v2.png", outputRoot)),
   ]);
+});
+
+test("keeps local development and builds rooted at slash", async () => {
+  const html = await readFile(new URL("index.html", outputRoot), "utf8");
+
+  assert.match(html, /(?:href|src)="\/_next\//);
+  assert.match(html, /src="\/product\/waveforms-1600\.webp"/);
+  assert.match(html, /href="\/favicon\.png"/);
+  assert.doesNotMatch(html, /\/simplesilicon\//);
+  assert.doesNotMatch(html, /\/simple-silicon\//);
 });
