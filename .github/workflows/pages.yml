@@ -18,6 +18,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: simplesilicon-main
+    env:
+      PAGES_CUSTOM_DOMAIN: simplesilicon.app
     steps:
       - name: Check out site source
         uses: actions/checkout@v6
@@ -26,8 +31,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: simplesilicon-main/package-lock.json
       - name: Install dependencies
         run: npm ci
+      - name: Verify deployment configuration
+        run: node --test tests/pages-config.test.mjs
       - name: Build static project site
         run: npm run build:pages
       - name: Configure Pages
@@ -35,7 +43,7 @@ jobs:
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4
         with:
-          path: dist/client
+          path: simplesilicon-main/dist/client
 
   deploy:
     needs: build

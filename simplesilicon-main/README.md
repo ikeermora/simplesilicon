@@ -21,20 +21,25 @@ npm run build
 npm run build:pages
 ```
 
-`npm run build:pages` produces a static artifact in `dist/client` with asset
-URLs configured for `https://ikeermora.github.io/simple-silicon/`.
+For the custom domain, run:
 
-The included Pages workflow is manual-only. It will not publish on push. When a
-public site repository is ready, enable GitHub Actions as the Pages source and
-run **Publish Simple Silicon website** manually. If the repository name changes,
-update `basePath` in `next.config.ts` and `SIMPLE_SILICON_URL` in the portfolio
-integration before publishing.
+```bash
+PAGES_CUSTOM_DOMAIN=simplesilicon.app npm run build:pages
+```
 
-For a future custom domain, use the regular `npm run build` output and configure
-the domain in GitHub Pages settings.
+This produces `dist/client` with root-relative assets and a CNAME file. Without
+`PAGES_CUSTOM_DOMAIN`, the build targets the GitHub project path instead.
+
+The workflow at the repository root (`.github/workflows/pages.yml`) builds this
+subdirectory and publishes on pushes to main or manual dispatch.
+
+## Public source boundary
+
+This repository must never contain source from the official desktop application,
+including snippets, internal dependencies, archives, or application build outputs.
+Only website code and approved public media belong here. See the root AGENTS.md.
 
 ## Portfolio preview
 
-The `portfolio-integration` directory contains a self-contained React card,
-styles, and public assets ready to copy into the portfolio project once that
-repository is available.
+The `portfolio-integration` directory contains a standalone React card, styles,
+and public assets for the portfolio website.

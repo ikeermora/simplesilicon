@@ -9,7 +9,11 @@ export function getGitHubPagesConfig(environment = process.env) {
   }
 
   const enabled = environment.GITHUB_PAGES === "true";
-  const basePath = enabled ? `/${project}` : "";
+  const customDomain = environment.PAGES_CUSTOM_DOMAIN?.trim();
+  if (customDomain && !/^[a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,}$/i.test(customDomain)) {
+    throw new Error(`Invalid PAGES_CUSTOM_DOMAIN: ${customDomain}`);
+  }
+  const basePath = enabled && !customDomain ? `/${project}` : "";
 
   return {
     enabled,
@@ -17,8 +21,9 @@ export function getGitHubPagesConfig(environment = process.env) {
     project,
     repository,
     basePath,
+    customDomain,
     siteUrl: enabled
-      ? `https://${owner}.github.io${basePath}`
+      ? customDomain ? `https://${customDomain}` : `https://${owner}.github.io${basePath}`
       : "http://localhost:3000",
   };
 }

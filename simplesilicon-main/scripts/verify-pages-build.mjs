@@ -5,7 +5,7 @@ import { getGitHubPagesConfig } from "../github-pages.config.mjs";
 const pagesDirectory = resolve("dist/client");
 const { basePath, enabled, siteUrl } = getGitHubPagesConfig();
 
-if (!enabled || !basePath) {
+if (!enabled) {
   throw new Error("The Pages verifier must run with GITHUB_PAGES=true.");
 }
 
